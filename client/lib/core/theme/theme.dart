@@ -4,5 +4,14 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final darkThemeMode = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: Pallete.backgroundColor,
+    inputDecorationTheme: const InputDecorationTheme(
+      contentPadding: EdgeInsets.all(27),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Pallete.borderColor, width: 3),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Pallete.gradient2, width: 3),
+      ),
+    ),
   );
 }
