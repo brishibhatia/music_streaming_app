@@ -1,0 +1,41 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Environment variables
+.env
+.env.local
+
+# Database
+*.sqlite3
+*.db
+
+# FastAPI / Uvicorn
+*.log
+
+# PyCharm / VS Code
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Migrations (if using Alembic)
+alembic/versions/__pycache__/
+
+# Testing
+.pytest_cache/
+.coverage
+
+# Node (if frontend inside same repo)
+node_modules/
+dist/
+build/

@@ -1,3 +1,4 @@
+import 'package:client/core/theme/app_pallete.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
@@ -9,33 +10,67 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignupPageState();
 }
 
-List<String> placeholder = ["Name", "Email", "Password"];
-
 class _SignupPageState extends State<SignupPage> {
+  List<String> placeholder = ["Name", "Email", "Password"];
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+    formKey.currentState!.validate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Text(
-                "Sign Up",
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  "Sign Up",
+                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            SizedBox(height: 25),
-            CustomField(hintText: "Name"),
-            SizedBox(height: 10),
-            CustomField(hintText: "Email"),
-            SizedBox(height: 10),
-            CustomField(hintText: "Password"),
-            SizedBox(height: 10),
-            AuthGradientButton(),
-          ],
+              SizedBox(height: 25),
+              CustomField(hintText: "Name", controller: nameController),
+              SizedBox(height: 10),
+              CustomField(hintText: "Email", controller: emailController),
+              SizedBox(height: 10),
+              CustomField(
+                hintText: "Password",
+                controller: passwordController,
+                isObscureText: true,
+              ),
+              SizedBox(height: 10),
+              AuthGradientButton(buttonText: 'Sign Up', onTap: () {}),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Already have an account ?"),
+                  SizedBox(width: 5),
+                  Text(
+                    "Sign In",
+                    style: TextStyle(
+                      color: Pallete.gradient2,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
