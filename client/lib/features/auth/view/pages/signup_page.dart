@@ -1,4 +1,5 @@
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/features/auth/repository/auth_remote_repository.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _SignupPageState extends State<SignupPage> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-    formKey.currentState!.validate();
+    // formKey.currentState!.validate();
   }
 
   @override
@@ -53,7 +54,25 @@ class _SignupPageState extends State<SignupPage> {
                 isObscureText: true,
               ),
               SizedBox(height: 10),
-              AuthGradientButton(buttonText: 'Sign Up', onTap: () {}),
+              AuthGradientButton(
+                buttonText: 'Sign Up',
+                onTap: () async {
+                  if (!formKey.currentState!.validate()) {
+                    return; // stop if fields are empty
+                  }
+
+                  try {
+                    await AuthRemoteRepository().signup(
+                      name: nameController.text.trim(),
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim(),
+                    );
+                  } catch (e) {
+                    print("Signup failed: $e");
+                  }
+                },
+              ),
+
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
