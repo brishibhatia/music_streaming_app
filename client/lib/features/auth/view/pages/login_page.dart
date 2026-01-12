@@ -1,4 +1,6 @@
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/features/auth/repository/auth_remote_repository.dart';
+import 'package:client/features/auth/view/pages/signup_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
@@ -51,18 +53,34 @@ class _LoginPageState extends State<LoginPage> {
                 isObscureText: true,
               ),
               SizedBox(height: 10),
-              AuthGradientButton(buttonText: 'Sign In', onTap: () {}),
+              AuthGradientButton(
+                buttonText: 'Sign In',
+                onTap: () async {
+                  await AuthRemoteRepository().login(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  );
+                },
+              ),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have an account ?"),
                   SizedBox(width: 5),
-                  Text(
-                    "Sign Up",
-                    style: TextStyle(
-                      color: Pallete.gradient2,
-                      fontWeight: FontWeight.w600,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignupPage()),
+                      );
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                        color: Pallete.gradient2,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],

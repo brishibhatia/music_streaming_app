@@ -1,5 +1,6 @@
 import 'package:client/core/theme/app_pallete.dart';
 import 'package:client/features/auth/repository/auth_remote_repository.dart';
+import 'package:client/features/auth/view/pages/login_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
@@ -57,10 +58,6 @@ class _SignupPageState extends State<SignupPage> {
               AuthGradientButton(
                 buttonText: 'Sign Up',
                 onTap: () async {
-                  if (!formKey.currentState!.validate()) {
-                    return; // stop if fields are empty
-                  }
-
                   try {
                     await AuthRemoteRepository().signup(
                       name: nameController.text.trim(),
@@ -79,11 +76,19 @@ class _SignupPageState extends State<SignupPage> {
                 children: [
                   Text("Already have an account ?"),
                   SizedBox(width: 5),
-                  Text(
-                    "Sign In",
-                    style: TextStyle(
-                      color: Pallete.gradient2,
-                      fontWeight: FontWeight.w600,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                    child: Text(
+                      "Sign In",
+                      style: TextStyle(
+                        color: Pallete.gradient2,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],
