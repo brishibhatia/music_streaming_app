@@ -4,6 +4,7 @@ import 'package:client/features/auth/view/pages/login_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart' hide State;
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -59,11 +60,16 @@ class _SignupPageState extends State<SignupPage> {
                 buttonText: 'Sign Up',
                 onTap: () async {
                   try {
-                    await AuthRemoteRepository().signup(
+                    final res = await AuthRemoteRepository().signup(
                       name: nameController.text.trim(),
                       email: emailController.text.trim(),
                       password: passwordController.text.trim(),
                     );
+                    final val = switch (res) {
+                      Left(value: final l) => l,
+                      Right(value: final r) => r.toString(),
+                    };
+                    print(val);
                   } catch (e) {
                     print("Signup failed: $e");
                   }

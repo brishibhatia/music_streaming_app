@@ -43,7 +43,7 @@ def login_user(user : UserLogin ,  db : Session= Depends(get_db)):
      raise HTTPException(400, 'User with this email does not exist')
     
     is_match = bcrypt.checkpw(user.password.encode() , user_db.password)
-
+    
     if not is_match :
      raise HTTPException(400, 'password is wrong')
     return user_db
