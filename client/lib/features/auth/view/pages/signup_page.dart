@@ -1,4 +1,5 @@
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/core/widgets/loader.dart';
 import 'package:client/features/auth/repository/auth_remote_repository.dart';
 import 'package:client/features/auth/view/pages/login_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
@@ -32,72 +33,81 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(authViewModelProvider).isLoading == true;
+
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Text(
-                  "Sign Up",
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 25),
-              CustomField(hintText: "Name", controller: nameController),
-              SizedBox(height: 10),
-              CustomField(hintText: "Email", controller: emailController),
-              SizedBox(height: 10),
-              CustomField(
-                hintText: "Password",
-                controller: passwordController,
-                isObscureText: true,
-              ),
-              SizedBox(height: 10),
-              AuthGradientButton(
-                buttonText: 'Sign Up',
-                onTap: () async {
-                  ref
-                      .read(authViewModelProvider.notifier)
-                      .signUpUser(
-                        name: nameController.text,
-                        email: emailController.text,
-                        password: passwordController.text,
-                      );
-                },
-              ),
-
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Already have an account ?"),
-                  SizedBox(width: 5),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
-                    },
-                    child: Text(
-                      "Sign In",
-                      style: TextStyle(
-                        color: Pallete.gradient2,
-                        fontWeight: FontWeight.w600,
+      body: !isLoading
+          ? const Loader()
+          : Padding(
+              padding: const EdgeInsets.only(left: 5, right: 5),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 25),
+                    CustomField(hintText: "Name", controller: nameController),
+                    SizedBox(height: 10),
+                    CustomField(hintText: "Email", controller: emailController),
+                    SizedBox(height: 10),
+                    CustomField(
+                      hintText: "Password",
+                      controller: passwordController,
+                      isObscureText: true,
+                    ),
+                    SizedBox(height: 10),
+                    AuthGradientButton(
+                      buttonText: 'Sign Up',
+                      onTap: () async {
+                        ref
+                            .read(authViewModelProvider.notifier)
+                            .signUpUser(
+                              name: nameController.text,
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                      },
+                    ),
+
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Already have an account ?"),
+                        SizedBox(width: 5),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Sign In",
+                            style: TextStyle(
+                              color: Pallete.gradient2,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
