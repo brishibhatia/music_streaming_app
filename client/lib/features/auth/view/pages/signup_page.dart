@@ -1,4 +1,5 @@
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/core/utils.dart';
 import 'package:client/core/widgets/loader.dart';
 import 'package:client/features/auth/repository/auth_remote_repository.dart';
 import 'package:client/features/auth/view/pages/login_page.dart';
@@ -37,13 +38,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     ref.listen(authViewModelProvider, (prev, next) {
       next.when(
         data: (data) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text("Account created successfully please login"),
-              ),
-            );
+          // ScaffoldMessenger.of(context)
+          //   ..hideCurrentSnackBar()
+          //   ..showSnackBar(
+          //     SnackBar(
+          //       content: Text("Account created successfully please login"),
+          //     ),
+          //   );
+          showSnackBar(context, "Account created successfully please login");
 
           Navigator.push(
             context,
@@ -52,9 +54,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           isLoading == !isLoading;
         },
         error: (error, st) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text("error occured $error")));
+          // ScaffoldMessenger.of(context)
+          //   ..hideCurrentSnackBar()
+          //   ..showSnackBar(SnackBar(content: Text("error occured $error")));
+          showSnackBar(context, "error occured $error");
         },
         loading: () {},
       );

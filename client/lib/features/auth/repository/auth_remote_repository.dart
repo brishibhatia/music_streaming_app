@@ -6,6 +6,15 @@ import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'auth_remote_repository.g.dart';
+
+@riverpod
+AuthRemoteRepository authRemoteRepository(AuthRemoteRepositoryRef ref) {
+  return AuthRemoteRepository();
+}
+
 class AuthRemoteRepository {
   Future<Either<AppFailure, UserModel>> signup({
     required String name,

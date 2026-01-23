@@ -1,4 +1,5 @@
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/core/utils.dart';
 import 'package:client/features/auth/repository/auth_remote_repository.dart';
 import 'package:client/features/auth/view/pages/signup_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
@@ -32,7 +33,20 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     ref.listen(authViewModelProvider, (prev, next) {
-      next.when(data: (data) {}, error: (error, st) {}, loading: () {});
+      next.when(
+        data: (data) {
+          showSnackBar(context, "Account created successfully please login");
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+        },
+        error: (error, st) {
+          showSnackBar(context, "error occured $error");
+        },
+        loading: () {},
+      );
     });
     return Scaffold(
       appBar: AppBar(),
